@@ -73,7 +73,7 @@ const SYSTEM_PROMPT =
   'You answer questions based on the webpage content provided to you. ' +
   'Be concise, clear, and accurate.';
 
-const MODEL_ID = 'Llama-3.2-1B-Instruct-q4f16_1-MLC';
+const MODEL_ID = 'SmolLM2-360M-Instruct-q4f16_1-MLC';
 
 // ─────────────────────────────────────────────
 // Initialization
@@ -213,12 +213,31 @@ async function complete(messages: ChatMessage[]): Promise<string> {
   if (currentMode === 'local') {
     if (!localEngine) throw new Error('Local AI model is not ready yet. Please wait.');
 
-    const reply = await localEngine.chat.completions.create({
-      messages,
-      temperature: 0.7,
-      max_tokens: 512,
-    });
-    return reply.choices[0].message.content ?? '';
+    try {
+      const reply = await localEngine.chat.completions.create({
+        messages,
+        temperature: 0.7,
+        max_tokens: 512,
+      });
+      return reply.choices[0].message.content ?? '';
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : String(err);
+      if (msg.includes('disposed')) {
+        console.warn('[PPA] Local engine disposed. Attempting auto-recovery...');
+        modelLoaded = false;
+        await initLocalEngine();
+        
+        // Retry once after recovery
+        if (!localEngine) throw new Error('Failed to recover local AI model.');
+        const retryReply = await localEngine.chat.completions.create({
+          messages,
+          temperature: 0.7,
+          max_tokens: 512,
+        });
+        return retryReply.choices[0].message.content ?? '';
+      }
+      throw err;
+    }
 
   } else {
     // Cloud mode — pick API key based on selected provider

@@ -4,7 +4,7 @@
   <p><strong>A 100% Local, On-Device AI Chrome Extension for Web Summarization and Privacy Policy Analysis.</strong></p>
   <img src="https://img.shields.io/badge/Manifest-V3-blue.svg" alt="Manifest V3">
   <img src="https://img.shields.io/badge/TypeScript-Ready-blue.svg" alt="TypeScript">
-  <img src="https://img.shields.io/badge/WebLLM-Llama_3.2-orange.svg" alt="WebLLM">
+  <img src="https://img.shields.io/badge/WebLLM-SmolLM2_360M-orange.svg" alt="WebLLM">
   <img src="https://img.shields.io/badge/Privacy-First-success.svg" alt="Privacy First">
 </div>
 
@@ -25,7 +25,7 @@ This project was built to demonstrate advanced on-device AI engineering, managin
 - **Core Framework:** Chrome Extension Manifest V3
 - **Language:** TypeScript
 - **Build Tool:** Vite + CRXJS
-- **Local AI Engine:** WebLLM (`@mlc-ai/web-llm`) running Llama-3.2-1B-Instruct
+- **Local AI Engine:** WebLLM (`@mlc-ai/web-llm`) running SmolLM2-360M-Instruct
 - **Cloud AI Fallback:** Google Gemini API (gemini-1.5-flash) & Groq API (llama-3.3-70b) — *(Planned support for OpenAI, Anthropic, and other frontier models)*
 - **Content Parsing:** Mozilla's Readability.js
 - **Styling:** Vanilla CSS (Modern, lightweight, no-framework approach)
@@ -41,13 +41,13 @@ This extension currently implements **7 core features**:
 2. **✅ Privacy Indicator**  
    A clear, visual badge that verifies data safety in real-time (`🔒 100% Local — No data sent`).
 3. **✅ Local ↔ Cloud Toggle**  
-   Seamlessly switch between maximum privacy (Local Llama 3.2) and maximum speed/quality (Cloud). Currently supports Gemini and Groq, with planned integrations for OpenAI, Anthropic, and other frontier models.
+   Seamlessly switch between maximum privacy (Local SmolLM2 360M) and maximum speed/quality (Cloud). Currently supports Gemini and Groq, with planned integrations for OpenAI, Anthropic, and other frontier models.
 4. **✅ Explain This Privacy Policy**  
    Context-aware detection that automatically offers to translate complex, jargon-heavy privacy policies into simple bullet points.
 5. **✅ Chat with Page**  
    A built-in Q&A interface allowing users to ask specific questions about the article they are currently reading.
 6. **✅ Model Loading Progress Bar**  
-   Smooth UX for downloading and caching the ~600MB local WebLLM model into the browser's persistent storage.
+   Smooth UX for downloading and caching the ~380MB local WebLLM model into the browser's persistent storage.
 7. **✅ Transparency Dashboard**  
    Analytics counters tracking how many summaries were kept entirely on-device versus how many used the cloud fallback.
 

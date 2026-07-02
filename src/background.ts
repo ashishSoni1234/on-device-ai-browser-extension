@@ -23,7 +23,7 @@ import type { Stats, AppSettings, CloudProvider } from './shared-types.ts';
 const engine = new MLCEngine();
 let handler: ExtensionServiceWorkerMLCEngineHandler;
 let modelLoaded = false;
-const MODEL_ID = 'Llama-3.2-1B-Instruct-q4f16_1-MLC';
+const MODEL_ID = 'SmolLM2-360M-Instruct-q4f16_1-MLC';
 
 chrome.runtime.onConnect.addListener((port: chrome.runtime.Port) => {
   if (port.name === 'web_llm_service_worker') {
