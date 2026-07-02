@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Privacy Page Assistant — Settings</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/options.css" />
+  </head>
+  <body>
+    <div class="page-wrapper">
+
+      <!-- Header -->
+      <header class="options-header">
+        <span class="logo">🛡️</span>
+        <div>
+          <h1>Privacy Page Assistant</h1>
+          <p class="subtitle">Settings &amp; Configuration</p>
+        </div>
+      </header>
+
+      <!-- AI Mode -->
+      <section class="card">
+        <h2 class="card-title">🤖 AI Mode</h2>
+        <p class="card-desc">Choose how the AI processes your pages.</p>
+        <div class="radio-group">
+          <label class="radio-option">
+            <input type="radio" name="mode" id="modeLocal" value="local" />
+            <div class="radio-content">
+              <span class="radio-title">🔒 Local Mode <span class="tag green">Recommended</span></span>
+              <span class="radio-desc">
+                Runs entirely on your device using WebLLM (Llama 3.2 1B). 100% private.
+                No internet connection needed after the first model download (~600 MB, cached).
+              </span>
+            </div>
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="mode" id="modeCloud" value="cloud" />
+            <div class="radio-content">
+              <span class="radio-title">☁️ Cloud Mode <span class="tag orange">Requires API Key</span></span>
+              <span class="radio-desc">
+                Sends page text to a cloud AI provider. Faster and no model download,
+                but page content leaves your device.
+              </span>
+            </div>
+          </label>
+        </div>
+      </section>
+
+      <!-- Cloud Provider -->
+      <section class="card" id="providerCard">
+        <h2 class="card-title">☁️ Cloud Provider</h2>
+        <p class="card-desc">Select which AI service to use in Cloud Mode.</p>
+        <div class="radio-group">
+
+          <!-- Groq -->
+          <label class="radio-option">
+            <input type="radio" name="provider" id="providerGroq" value="groq" />
+            <div class="radio-content">
+              <span class="radio-title">
+                ⚡ Groq — Llama 3.3 70B
+                <span class="tag green">Free &amp; Fast</span>
+              </span>
+              <span class="radio-desc">
+                Uses <strong>llama-3.3-70b-versatile</strong>. Extremely fast inference.
+                Free tier available. Get your key at
+                <a href="https://console.groq.com/keys" target="_blank">console.groq.com/keys</a>
+              </span>
+            </div>
+          </label>
+
+          <!-- Gemini -->
+          <label class="radio-option">
+            <input type="radio" name="provider" id="providerGemini" value="gemini" />
+            <div class="radio-content">
+              <span class="radio-title">
+                🌟 Google Gemini — gemini-1.5-flash
+                <span class="tag green">Free</span>
+              </span>
+              <span class="radio-desc">
+                Uses <strong>gemini-1.5-flash</strong>. 15 requests/min free tier.
+                Get your key at
+                <a href="https://aistudio.google.com/apikey" target="_blank">aistudio.google.com/apikey</a>
+              </span>
+            </div>
+          </label>
+
+        </div>
+      </section>
+
+      <!-- API Keys -->
+      <section class="card" id="keysCard">
+        <h2 class="card-title">🔑 API Keys</h2>
+        <p class="card-desc">
+          Keys are stored <strong>locally</strong> in your browser via
+          <code>chrome.storage.local</code> and are never sent anywhere except
+          directly to the selected AI provider when Cloud Mode is active.
+        </p>
+
+        <!-- Groq Key -->
+        <div class="field-group" id="groqKeyGroup">
+          <label class="field-label" for="groqKey">
+            ⚡ Groq API Key
+          </label>
+          <div class="get-key-box">
+            <span class="get-key-icon">🚀</span>
+            <div>
+              <strong>Get a free Groq key</strong>
+              <p>Go to <a href="https://console.groq.com/keys" target="_blank">console.groq.com/keys</a> — free, no credit card needed.</p>
+            </div>
+          </div>
+          <div class="input-row">
+            <input
+              type="password"
+              id="groqKey"
+              class="text-input"
+              placeholder="gsk_…"
+              autocomplete="off"
+            />
+            <button class="reveal-btn" data-target="groqKey" title="Show/hide key">👁️</button>
+          </div>
+          <span class="field-hint">Starts with <code>gsk_</code></span>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Gemini Key -->
+        <div class="field-group" id="geminiKeyGroup">
+          <label class="field-label" for="geminiKey">
+            🌟 Google Gemini API Key
+          </label>
+          <div class="get-key-box gemini-box">
+            <span class="get-key-icon">✨</span>
+            <div>
+              <strong>Get a free Gemini key</strong>
+              <p>Go to <a href="https://aistudio.google.com/apikey" target="_blank">aistudio.google.com/apikey</a> — free, no credit card needed.</p>
+            </div>
+          </div>
+          <div class="input-row">
+            <input
+              type="password"
+              id="geminiKey"
+              class="text-input"
+              placeholder="AIza…"
+              autocomplete="off"
+            />
+            <button class="reveal-btn" data-target="geminiKey" title="Show/hide key">👁️</button>
+          </div>
+          <span class="field-hint">Starts with <code>AIza</code></span>
+        </div>
+      </section>
+
+      <!-- About -->
+      <section class="card">
+        <h2 class="card-title">ℹ️ About</h2>
+        <p class="card-desc">
+          <strong>Privacy Page Assistant v1.0</strong> — A portfolio project demonstrating
+          on-device AI inference in a Chrome Extension using WebLLM (Llama 3.2 1B),
+          Mozilla Readability.js, and Manifest V3. Cloud mode supports Groq (Llama 3.3 70B)
+          and Google Gemini (gemini-1.5-flash).
+        </p>
+      </section>
+
+      <!-- Save -->
+      <div class="save-row">
+        <div id="saveStatus" class="save-status" style="display:none"></div>
+        <button id="saveBtn" class="save-btn">💾 Save Settings</button>
+      </div>
+
+    </div>
+    <script type="module" src="/src/options.ts"></script>
+  </body>
+</html>

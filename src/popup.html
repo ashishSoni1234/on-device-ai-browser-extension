@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Privacy Page Assistant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/popup.css" />
+  </head>
+  <body>
+    <!-- ── Header ── -->
+    <header class="header">
+      <div class="header-left">
+        <span class="logo">🛡️</span>
+        <div class="header-title">
+          <h1>Privacy Assistant</h1>
+          <span class="version">v1.0 · On-Device AI</span>
+        </div>
+      </div>
+      <button id="settingsBtn" class="icon-btn" title="Open Settings" aria-label="Open Settings">
+        ⚙️
+      </button>
+    </header>
+
+    <!-- ── Privacy Badge ── -->
+    <div id="privacyBadge" class="badge local-badge">
+      🔒 100% Local — No data sent
+    </div>
+
+    <!-- ── Mode Toggle ── -->
+    <div class="mode-row">
+      <span class="mode-label">AI Mode:</span>
+      <div class="toggle-group">
+        <span id="localLabel" class="toggle-opt active">Local</span>
+        <label class="toggle-switch" aria-label="Toggle between Local and Cloud mode">
+          <input type="checkbox" id="modeToggle" />
+          <span class="slider"></span>
+        </label>
+        <span id="cloudLabel" class="toggle-opt">Cloud</span>
+      </div>
+    </div>
+
+    <!-- ── Model Loading Progress ── -->
+    <div id="progressSection" class="progress-section" style="display:none">
+      <div class="progress-header">
+        <span id="progressText">Loading AI model… 0%</span>
+        <span id="progressPct" class="progress-pct">0%</span>
+      </div>
+      <div class="progress-bar">
+        <div id="progressFill" class="progress-fill"></div>
+      </div>
+      <p class="progress-hint">First load downloads ~600 MB. Cached after that.</p>
+    </div>
+
+    <!-- ── WebGPU fallback ── -->
+    <div id="webgpuError" class="error-banner" style="display:none">
+      ⚠️ Your browser doesn't support local AI (WebGPU). Please switch to <strong>Cloud Mode</strong> in the toggle above.
+    </div>
+
+    <!-- ── Main Action Buttons ── -->
+    <div class="actions">
+      <button id="summarizeBtn" class="primary-btn" disabled>
+        <span class="btn-icon">✨</span> Summarize this page
+      </button>
+      <button id="privacyBtn" class="privacy-btn" style="display:none">
+        <span class="btn-icon">🔍</span> Explain this Privacy Policy
+      </button>
+    </div>
+
+    <!-- ── Result Box ── -->
+    <div id="resultBox" class="result-box" style="display:none">
+      <div class="result-header">
+        <span id="resultLabel" class="result-label">📄 Summary</span>
+        <button id="copyBtn" class="copy-btn" title="Copy to clipboard">📋 Copy</button>
+      </div>
+      <div id="resultContent" class="result-content"></div>
+    </div>
+
+    <!-- ── Chat Section ── -->
+    <div id="chatSection" class="chat-section" style="display:none">
+      <div class="chat-header">
+        <span>💬 Chat with this page</span>
+        <button id="clearChatBtn" class="text-btn">Clear</button>
+      </div>
+      <div id="chatMessages" class="chat-messages"></div>
+      <div class="chat-input-row">
+        <input
+          type="text"
+          id="chatInput"
+          class="chat-input"
+          placeholder="Ask a question about this page…"
+          maxlength="500"
+        />
+        <button id="chatSendBtn" class="send-btn" title="Send">➤</button>
+      </div>
+    </div>
+
+    <!-- ── Transparency Dashboard ── -->
+    <div class="dashboard">
+      <div class="dashboard-header">
+        <span class="dashboard-title">📊 Transparency Dashboard</span>
+        <button id="resetStatsBtn" class="text-btn">Reset</button>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card local">
+          <span class="stat-icon">🔒</span>
+          <div class="stat-info">
+            <span id="statLocal" class="stat-value">0</span>
+            <span class="stat-label">Summaries<br/>kept local</span>
+          </div>
+        </div>
+        <div class="stat-card cloud">
+          <span class="stat-icon">☁️</span>
+          <div class="stat-info">
+            <span id="statCloud" class="stat-value">0</span>
+            <span class="stat-label">Cloud<br/>requests</span>
+          </div>
+        </div>
+        <div class="stat-card pages">
+          <span class="stat-icon">📄</span>
+          <div class="stat-info">
+            <span id="statPages" class="stat-value">0</span>
+            <span class="stat-label">Pages<br/>on-device</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/src/popup.ts"></script>
+  </body>
+</html>
