@@ -18,6 +18,8 @@ It guarantees zero data leakage—your browsing data, articles, and private info
 
 This project was built to demonstrate advanced on-device AI engineering, managing WebGPU constraints, and implementing a privacy-centric user experience within the constraints of Chrome Manifest V3.
 
+👉 **For a deep dive into the technical architecture, WebGPU constraints, and Graceful Fallback mechanisms, please read the [Technical Documentation](DOCUMENTATION.md).**
+
 ---
 
 ## 🛠️ Technology Stack
@@ -104,3 +106,13 @@ Contributions, issues, and feature requests are welcome! Feel free to check the 
 
 ## 📝 License
 This project is licensed under the MIT License - see the LICENSE file for details.
+
+---
+
+## 📸 Screenshots & Demo
+
+Here is a look at the extension in action:
+
+![Privacy Page Assistant Demo 1](images/demo1.png)
+
+![Privacy Page Assistant Demo 2](images/demo2.png)
