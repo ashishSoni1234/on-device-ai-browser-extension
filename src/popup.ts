@@ -284,7 +284,7 @@ async function handleSummarize(): Promise<void> {
   setSummarizeLoading(true);
 
   try {
-    const truncatedText = pageText.substring(0, 10_000);
+    const truncatedText = pageText.substring(0, 4_000);
     const messages: ChatMessage[] = [
       { role: 'system', content: SYSTEM_PROMPT },
       {
@@ -300,7 +300,7 @@ async function handleSummarize(): Promise<void> {
     chatHistory = [
       {
         role: 'system',
-        content: `${SYSTEM_PROMPT}\n\nWebpage Title: ${pageTitle}\n\nWebpage Content (first 8000 chars):\n${truncatedText.substring(0, 8000)}`,
+        content: `${SYSTEM_PROMPT}\n\nWebpage Title: ${pageTitle}\n\nWebpage Content (first 3000 chars):\n${truncatedText.substring(0, 3000)}`,
       },
     ];
     chatSection.style.display = 'block';
@@ -337,7 +337,7 @@ async function handlePrivacyExplain(): Promise<void> {
   privacyBtn.innerHTML = '<span class="spinner"></span> Analyzing…';
 
   try {
-    const truncatedText = pageText.substring(0, 12_000);
+    const truncatedText = pageText.substring(0, 4_000);
     const messages: ChatMessage[] = [
       {
         role: 'system',
@@ -367,7 +367,7 @@ ${truncatedText}`,
     chatHistory = [
       {
         role: 'system',
-        content: `${SYSTEM_PROMPT}\n\nPrivacy Policy Content:\n${truncatedText.substring(0, 8000)}`,
+        content: `${SYSTEM_PROMPT}\n\nPrivacy Policy Content:\n${truncatedText.substring(0, 3000)}`,
       },
     ];
     chatSection.style.display = 'block';
