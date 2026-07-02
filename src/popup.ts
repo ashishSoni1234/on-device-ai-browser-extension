@@ -221,22 +221,22 @@ async function complete(messages: ChatMessage[]): Promise<string> {
       });
       return reply.choices[0].message.content ?? '';
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : String(err);
-      if (msg.includes('disposed')) {
-        console.warn('[PPA] Local engine disposed. Attempting auto-recovery...');
-        modelLoaded = false;
-        await initLocalEngine();
-        
-        // Retry once after recovery
-        if (!localEngine) throw new Error('Failed to recover local AI model.');
-        const retryReply = await localEngine.chat.completions.create({
-          messages,
-          temperature: 0.7,
-          max_tokens: 512,
-        });
-        return retryReply.choices[0].message.content ?? '';
+      console.warn('[PPA] Local GPU inference failed. Auto-falling back to Cloud.', err);
+      
+      const apiKey = currentProvider === 'groq' ? currentSettings.groqKey : currentSettings.geminiKey;
+      if (!apiKey || apiKey.trim() === '') {
+        throw new Error(`GPU crashed, and no Cloud API key is set for fallback. Please add a Groq/Gemini key in Settings (⚙️).`);
       }
-      throw err;
+
+      const response = await chrome.runtime.sendMessage({
+        action: 'cloud_complete',
+        payload: { provider: currentProvider, apiKey, messages },
+      });
+
+      if (!response?.success) {
+        throw new Error(`GPU crashed, and fallback request failed: ${response?.error}`);
+      }
+      return (response.result as string) + '\n\n*(⚡ Auto-fallback to Cloud due to heavy hardware load)*';
     }
 
   } else {
